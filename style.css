@@ -18,27 +18,31 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ---------------- Navbar ---------------- */
-.nav-link {
+/* Custom Underline Effect for Bootstrap Nav Links */
+.navbar-nav .nav-link {
   position: relative;
-  text-decoration: none;
 }
 
-.nav-link::after {
+.navbar-nav .nav-link::after {
   content: '';
   position: absolute;
+  bottom: 0.2rem; /* Adjusts the underline's vertical position */
+  left: 0;
   width: 0;
   height: 2px;
-  display: block;
-  margin-top: 5px;
-  right: 0;
-  background: #ff7e5f;
+  background-color: #ff7e5f;
+  transition: width 0.3s ease-in-out;
 }
 
-.nav-link:hover::after {
+.navbar-nav .nav-link:hover::after {
   width: 100%;
-  left: 0;
-  background: #ff7e5f;
+}
+
+/* Hides the effect when the menu is collapsed on mobile/tablet */
+@media (max-width: 991.98px) {
+  .navbar-nav .nav-link::after {
+    display: none;
+  }
 }
 
 /* ---------------- Hero Section ---------------- */
@@ -128,10 +132,10 @@ body {
 }
 
 
-
-/* ---------------- Section Styling ---------------- */
+/* ---------------- Section Styling (Optimized) ---------------- */
 section {
-  padding: 70px 0;
+  /* Added horizontal padding to prevent content from touching screen edges on mobile */
+  padding: 70px 20px;
   scroll-margin-top: 80px;
 }
 
@@ -147,39 +151,28 @@ section h2::after {
   display: block;
   width: 60%;
   height: 4px;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
-  margin: 8px 0 0;
+  /* Using a CSS variable for the gradient makes it easy to update later */
+  background: var(--primary-gradient, linear-gradient(90deg, #ff7e5f, #feb47b));
+  /* 'auto' for left/right margin centers the underline relative to the h2 text */
+  margin: 8px auto 0;
   border-radius: 2px;
 }
 
 /* ---------------- Skills ---------------- */
+/* --- PASTE THIS NEW CODE IN ITS PLACE --- */
+
 #skills {
-  background: #fff;
-  padding: 70px 110px;
+  background: #f8f9fa; /* Slightly off-white to make badges pop */
+  padding: 10px 110px;
 }
 
-#skills h2 {
-  font-weight: 700;
-  margin-bottom: 40px;
-  position: relative;
-}
-
-#skills h2::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
-  margin: 8px 0 0;
-  border-radius: 2px;
-}
-
-/* Skill badges */
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 12px;
+  justify-content: center;
+  gap: 15px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .skill-badge {
@@ -190,11 +183,26 @@ section h2::after {
   font-size: 0.95rem;
   font-weight: 500;
   cursor: default;
+  text-align: center;
+  flex: 0 1 auto; /* prevents stretching */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .skill-badge:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(255,126,95,0.3);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 576px) {
+  .skills-container {
+    gap: 10px;
+  }
+  .skill-badge {
+    flex: 1 1 calc(50% - 20px); /* 2 per row on small screens */
+    max-width: 200px;
+  }
 }
 
 /* ---------------- Projects ---------------- */
@@ -231,4 +239,35 @@ footer {
   color: #fff;
   text-align: center;
   padding: 20px 0;
+
+  /* ---------------- Responsive Adjustments ---------------- */
+@media (max-width: 768px) {
+  section {
+    text-align: center;
+  }
+  .about-container {
+    align-items: center;
+    text-align: center;
+  }
+  section h2::after {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  /* All styles for screens 576px and smaller go in here */
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  .hero p {
+    font-size: 1.1rem;
+  }
+  .skills-container {
+    gap: 10px;
+  }
+  .skill-badge {
+    flex: 1 1 calc(50% - 20px);
+    max-width: 200px;
+  }
 }
